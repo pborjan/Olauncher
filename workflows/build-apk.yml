@@ -3,7 +3,7 @@ name: Build Olauncher APK
 on:
   push:
     branches:
-      - main  # or master if your fork uses master
+      - master  # or master if your fork uses master
 
 jobs:
   build:
