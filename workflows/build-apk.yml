@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:  # allows you to trigger manually from GitHub
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build Debug APK
     runs-on: ubuntu-latest
 
     steps:
@@ -21,13 +20,21 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 33
+          build-tools: 33.0.2
+          cmake: 3.22.1
+          ndk: 25.1.8937393
+
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: Olauncher-debug-apk
